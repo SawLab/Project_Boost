@@ -6,13 +6,17 @@ using UnityEngine;
 public class Rocket : MonoBehaviour
 {
     Rigidbody rigidBody;
-    AudioSource audio;
+    AudioSource audioSource;
+
+    [SerializeField] float rcsThrust = 100f;
+    [SerializeField] float mainThrust = 100f;
+
 
     // Start is called before the first frame update
     void Start()
     {
         rigidBody = GetComponent<Rigidbody>();
-        audio = GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -27,17 +31,32 @@ public class Rocket : MonoBehaviour
         Rotate();
     }
 
-    private void Rotate()
+    void OnCollisionEnter(Collision collision)
     {
+        switch (collision.gameObject.tag)
+        {
+            case "Friendly":
+                print("OK");
+                break;
+            default:
+                print("Dead");
+                break;
+        }
+    }
+
+    private void Rotate()
+    {    
+        float rotationThisFrame = rcsThrust * Time.deltaTime;
+
         rigidBody.freezeRotation = true; // take manual control of rotation
 
         if (Input.GetKey(KeyCode.A))
         {
-            transform.Rotate(Vector3.forward);
+            transform.Rotate(Vector3.forward * rotationThisFrame);
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            transform.Rotate(-Vector3.forward);
+            transform.Rotate(-Vector3.forward * rotationThisFrame);
         }
 
         rigidBody.freezeRotation = false; // resume physics control of rotation
@@ -47,16 +66,16 @@ public class Rocket : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            rigidBody.AddRelativeForce(Vector3.up);
+            rigidBody.AddRelativeForce(Vector3.up * mainThrust);
 
-            if (!audio.isPlaying)
+            if (!audioSource.isPlaying)
             {
-                audio.Play();
+                audioSource.Play();
             }
         }
         else
         {
-            audio.Stop();
+            audioSource.Stop();
         }
     }
 }
