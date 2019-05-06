@@ -429,8 +429,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81a6e6d6c45a08a4fb2dde82207f3ad5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rcsThrust: 130
+  rcsThrust: 100
   mainThrust: 20
+  mainEngine: {fileID: 8300000, guid: 0fce09b4597818c4cb37be3aefd40b26, type: 3}
+  deathSound: {fileID: 8300000, guid: dcaf34f5cf7515b4595a3161e606599d, type: 3}
+  victorySound: {fileID: 8300000, guid: baf316b344282f046927a61a7b6de05a, type: 3}
 --- !u!82 &6290647425088624890
 AudioSource:
   m_ObjectHideFlags: 0
@@ -441,7 +444,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: dd61eb76570e2ad4083c265af78f5d85, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 0.22
   m_Pitch: 0.8
