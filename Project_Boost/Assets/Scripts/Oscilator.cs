@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Oscilator : MonoBehaviour
 {
@@ -19,6 +17,8 @@ public class Oscilator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (period <= Mathf.Epsilon) { return; } //protects against dividing by zero.
+
         float cycles = Time.time / period;
 
         const float tau = Mathf.PI * 2;

@@ -9,6 +9,7 @@ public class Rocket : MonoBehaviour
 
     [SerializeField] float rcsThrust = 100f;
     [SerializeField] float mainThrust = 100f;
+    [SerializeField] float levelLoadDelay = 3f;
 
     [SerializeField] AudioClip mainEngine;
     [SerializeField] AudioClip deathSound;
@@ -24,7 +25,7 @@ public class Rocket : MonoBehaviour
     private static int currentLevel = 0;
 
     const int FIRST_LEVEL = 0;
-    const int FINAL_LEVEL = 3;
+    const int FINAL_LEVEL = 4;
     
 
     // Start is called before the first frame update
@@ -46,6 +47,23 @@ public class Rocket : MonoBehaviour
         {
             Thrust();
             Rotate();
+        }
+
+        if (Debug.isDebugBuild)
+        {
+            RespondToDebugKeys();
+        }
+    }
+
+    private void RespondToDebugKeys()
+    {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            LoadNextScene();
+        }
+        else if (Input.GetKeyDown(KeyCode.C))
+        {
+            rigidBody.detectCollisions = !rigidBody.detectCollisions;
         }
     }
 
@@ -73,7 +91,7 @@ public class Rocket : MonoBehaviour
         audioSource.Stop();
         audioSource.PlayOneShot(deathSound);
         deathParticles.Play();
-        Invoke("RestartGame", 1f);
+        Invoke("RestartGame", levelLoadDelay);
     }
 
     private void StartSuccessSequence()
@@ -82,7 +100,7 @@ public class Rocket : MonoBehaviour
         audioSource.Stop();
         audioSource.PlayOneShot(victorySound);
         victoryParticles.Play();
-        Invoke("LoadNextScene", 1f);
+        Invoke("LoadNextScene", levelLoadDelay);
     }
 
     private void RestartGame()
