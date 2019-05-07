@@ -1610,9 +1610,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1081657610, guid: 8464a1804985cde4da6f7edce719aa8d, type: 3}
-      propertyPath: rcsThrust
-      value: 100
+    - target: {fileID: 8195587180910157088, guid: 8464a1804985cde4da6f7edce719aa8d,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8195587180910157088, guid: 8464a1804985cde4da6f7edce719aa8d,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8195587180910157088, guid: 8464a1804985cde4da6f7edce719aa8d,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8464a1804985cde4da6f7edce719aa8d, type: 3}

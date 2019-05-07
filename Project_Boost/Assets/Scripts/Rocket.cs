@@ -6,15 +6,26 @@ public class Rocket : MonoBehaviour
     Rigidbody rigidBody;
     AudioSource audioSource;
 
+
     [SerializeField] float rcsThrust = 100f;
     [SerializeField] float mainThrust = 100f;
+
     [SerializeField] AudioClip mainEngine;
     [SerializeField] AudioClip deathSound;
     [SerializeField] AudioClip victorySound;
 
+    [SerializeField] ParticleSystem thrustParticles;
+    [SerializeField] ParticleSystem deathParticles;
+    [SerializeField] ParticleSystem victoryParticles;
+
     enum State {Alive, Dying, Transcending }
     State currentState = State.Alive;
 
+    private static int currentLevel = 0;
+
+    const int FIRST_LEVEL = 0;
+    const int FINAL_LEVEL = 3;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -61,6 +72,7 @@ public class Rocket : MonoBehaviour
         currentState = State.Dying;
         audioSource.Stop();
         audioSource.PlayOneShot(deathSound);
+        deathParticles.Play();
         Invoke("RestartGame", 1f);
     }
 
@@ -69,17 +81,28 @@ public class Rocket : MonoBehaviour
         currentState = State.Transcending;
         audioSource.Stop();
         audioSource.PlayOneShot(victorySound);
+        victoryParticles.Play();
         Invoke("LoadNextScene", 1f);
     }
 
     private void RestartGame()
     {
-        SceneManager.LoadScene(0);
+        currentLevel = 0;
+        SceneManager.LoadScene(FIRST_LEVEL);
+        
     }
 
     private void LoadNextScene()
     {
-        SceneManager.LoadScene(1);
+        if (currentLevel != FINAL_LEVEL)
+        {
+            SceneManager.LoadScene(++currentLevel);
+        }
+        else
+        {
+            currentLevel = 0;
+            SceneManager.LoadScene(FIRST_LEVEL);
+        }
     }
 
     private void Rotate()
@@ -109,6 +132,7 @@ public class Rocket : MonoBehaviour
         else
         {
             audioSource.Stop();
+            thrustParticles.Stop();
         }
     }
 
@@ -119,6 +143,8 @@ public class Rocket : MonoBehaviour
         if (!audioSource.isPlaying)
         {
             audioSource.PlayOneShot(mainEngine);
+            thrustParticles.Play();
         }
+        
     }
 }
